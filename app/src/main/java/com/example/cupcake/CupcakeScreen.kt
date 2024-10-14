@@ -111,6 +111,7 @@ fun CupcakeApp(
             composable(route = CupcakeScreen.Start.name) {
                 // cuando el usuario esté en la ruta CupcakeScreen.Start, se mostrará esta pantalla
                 StartOrderScreen(
+                    // pasamos a StartOrderScreen una lista de opciones de cantidad
                     quantityOptions = DataSource.quantityOptions,
                     modifier = Modifier
                         .fillMaxSize()
