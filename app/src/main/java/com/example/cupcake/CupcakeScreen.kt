@@ -114,6 +114,10 @@ fun CupcakeApp(
                 StartOrderScreen(
                     // pasamos a StartOrderScreen una lista de opciones de cantidad
                     quantityOptions = DataSource.quantityOptions,
+                    onNextButtonClicked = {
+                        viewModel.setQuantity(it)
+                        navController.navigate(CupcakeScreen.Flavor.name)
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium))
@@ -126,6 +130,10 @@ fun CupcakeApp(
                 SelectOptionScreen(
                     // mostrar el precio actual
                     subtotal = uiState.price,
+                    onNextButtonClicked = {
+                        navController.navigate(CupcakeScreen.Pickup.name)
+                    },
+                    onCancelButtonClicked = {},
                     // listado de sabores
                     // con cada iteración, map toma un id y lo transforma a cadena de texto
                     options = DataSource.flavors.map {
@@ -143,6 +151,10 @@ fun CupcakeApp(
                 SelectOptionScreen(
                     // precio que hay en el estado actual del pedido
                     subtotal = uiState.price,
+                    onNextButtonClicked = {
+                        navController.navigate(CupcakeScreen.Summary.name)
+                    },
+                    onCancelButtonClicked = {},
                     // opciones que se mostrarán para que el usuario elija la fecha de recogida
                     options = uiState.pickupOptions,
                     // función que se llama cuando el usuario selecciona una opción
@@ -157,11 +169,13 @@ fun CupcakeApp(
                 OrderSummaryScreen(
                     // estado actual del pedido
                     orderUiState = uiState,
+                    onCancelButtonClicked = {},
+                    onSendButtonClicked = {
+                        subject: String, summary: String ->
+                    },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
-
-
         }
     }
 }
