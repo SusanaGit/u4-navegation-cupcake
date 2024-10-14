@@ -138,6 +138,20 @@ fun CupcakeApp(
                 )
             }
 
+            composable(route = CupcakeScreen.Pickup.name) {
+                // cuando el usuario esté en la ruta CupcakeScreen.Pickup, se mostrará esta pantalla
+                SelectOptionScreen(
+                    // precio que hay en el estado actual del pedido
+                    subtotal = uiState.price,
+                    // opciones que se mostrarán para que el usuario elija la fecha de recogida
+                    options = uiState.pickupOptions,
+                    // función que se llama cuando el usuario selecciona una opción
+                    // la opción seleccionada se pasa a la función viewModel.setDate(it) y se actualiza el estado
+                    onSelectionChanged = { viewModel.setDate(it) },
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+
             composable(route = CupcakeScreen.Summary.name) {
                 // cuando el usuario esté en la ruta CupcakeScreen.Summary, se mostrará esta pantalla
                 OrderSummaryScreen(
@@ -146,6 +160,8 @@ fun CupcakeApp(
                     modifier = Modifier.fillMaxHeight()
                 )
             }
+
+
         }
     }
 }
