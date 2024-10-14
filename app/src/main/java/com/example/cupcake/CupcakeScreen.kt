@@ -133,7 +133,11 @@ fun CupcakeApp(
                     onNextButtonClicked = {
                         navController.navigate(CupcakeScreen.Pickup.name)
                     },
-                    onCancelButtonClicked = {},
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(
+                            viewModel = viewModel,
+                            navController = navController)
+                    },
                     // listado de sabores
                     // con cada iteración, map toma un id y lo transforma a cadena de texto
                     options = DataSource.flavors.map {
@@ -154,7 +158,11 @@ fun CupcakeApp(
                     onNextButtonClicked = {
                         navController.navigate(CupcakeScreen.Summary.name)
                     },
-                    onCancelButtonClicked = {},
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(
+                            viewModel = viewModel,
+                            navController = navController)
+                    },
                     // opciones que se mostrarán para que el usuario elija la fecha de recogida
                     options = uiState.pickupOptions,
                     // función que se llama cuando el usuario selecciona una opción
@@ -169,7 +177,11 @@ fun CupcakeApp(
                 OrderSummaryScreen(
                     // estado actual del pedido
                     orderUiState = uiState,
-                    onCancelButtonClicked = {},
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(
+                            viewModel = viewModel,
+                            navController = navController)
+                    },
                     onSendButtonClicked = {
                         subject: String, summary: String ->
                     },
@@ -178,4 +190,12 @@ fun CupcakeApp(
             }
         }
     }
+}
+
+private fun cancelOrderAndNavigateToStart(
+    viewModel: OrderViewModel,
+    navController: NavHostController
+) {
+    viewModel.resetOrder()
+    navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
 }
