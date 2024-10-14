@@ -15,6 +15,7 @@
  */
 package com.example.cupcake
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -93,13 +94,22 @@ fun CupcakeApp(
         }
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
+
+        // Le decimos a la app todas las pantallas a las que puede navegar
         NavHost(
+
+            // controla la navegación entre las pantallas
+            // decide cuando cambiar de una pantalla a otra
             navController = navController,
+
+            // la pantalla de inicio estará asociada a CupcakeScreen.Start.name
             startDestination = CupcakeScreen.Start.name,
+
             modifier = Modifier.padding(innerPadding)
         ) {
 
             composable(route = CupcakeScreen.Start.name) {
+                // cuando el usuario esté en la ruta CupcakeScreen.Start, se mostrará esta pantalla
                 StartOrderScreen(
                     quantityOptions = DataSource.quantityOptions,
                     modifier = Modifier
@@ -110,11 +120,19 @@ fun CupcakeApp(
 
             composable(route = CupcakeScreen.Flavor.name) {
                 val context = LocalContext.current
+                // cuando el usuario esté en la ruta CupcakeScreen.Flavor, se mostrará esta pantalla
                 SelectOptionScreen(
+                    // mostrar el precio actual
                     subtotal = uiState.price,
+                    // listado de sabores
+                    // con cada iteración, map toma un id y lo transforma a cadena de texto
                     options = DataSource.flavors.map {
                         id -> context.resources.getString(id)
-                    }
+                    },
+                    // cuando el usuario selecciona un sabor, se actualiza el ViewModel
+                    onSelectionChanged = { viewModel.setFlavor(it) },
+                    // ajusto el tamaño
+                    modifier = Modifier.fillMaxHeight()
                 )
             }
         }
