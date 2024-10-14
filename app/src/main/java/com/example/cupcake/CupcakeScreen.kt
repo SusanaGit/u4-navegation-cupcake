@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cupcake.data.DataSource
+import com.example.cupcake.ui.OrderSummaryScreen
 import com.example.cupcake.ui.OrderViewModel
 import com.example.cupcake.ui.SelectOptionScreen
 import com.example.cupcake.ui.StartOrderScreen
@@ -133,6 +134,15 @@ fun CupcakeApp(
                     // cuando el usuario selecciona un sabor, se actualiza el ViewModel
                     onSelectionChanged = { viewModel.setFlavor(it) },
                     // ajusto el tamaño
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+
+            composable(route = CupcakeScreen.Summary.name) {
+                // cuando el usuario esté en la ruta CupcakeScreen.Summary, se mostrará esta pantalla
+                OrderSummaryScreen(
+                    // estado actual del pedido
+                    orderUiState = uiState,
                     modifier = Modifier.fillMaxHeight()
                 )
             }
